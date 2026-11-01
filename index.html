@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillMatch - Smart Job Finder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f6ff;
+            margin: 0;
+            color: #172554;
+        }
+        header {
+            background: #172554;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+        }
+        input {
+            width: 95%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        button {
+            background: #2563eb;
+            color: white;
+            padding: 13px 20px;
+            border: 0;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .job {
+            background: #eff6ff;
+            padding: 15px;
+            margin-top: 12px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>SkillMatch</h1>
+    <p>Find Jobs Based on Your Skills & Certificates</p>
+</header>
+
+<div class="container">
+    <h2>Find Your Job</h2>
+
+    <input id="qualification" placeholder="Your Qualification">
+    <input id="certificate" placeholder="Your Certificate">
+    <input id="skills" placeholder="Your Skills">
+    <input id="location" placeholder="Your Location">
+
+    <button onclick="findJobs()">Search Jobs</button>
+
+    <div id="results"></div>
+</div>
+
+<script>
+function findJobs() {
+    let qualification = document.getElementById("qualification").value;
+    let certificate = document.getElementById("certificate").value;
+    let skills = document.getElementById("skills").value;
+    let location = document.getElementById("location").value;
+
+    let results = document.getElementById("results");
+
+    if (!qualification || !skills) {
+        results.innerHTML = "<p>Please enter qualification and skills.</p>";
+        return;
+    }
+
+    results.innerHTML = `
+        <h2>Your Job Search</h2>
+        <div class="job">
+            <h3>Electrician Trainee</h3>
+            <p>Skills: Electrical Wiring, Maintenance</p>
+            <p>Sample job result for ${location || "India"}</p>
+            <p>Certificate: ${certificate || "Not specified"}</p>
+            <p>Qualification: ${qualification}</p>
+            <p><b>Demo listing – not a live vacancy.</b></p>
+        </div>
+    `;
+}
+</script>
+
+</body>
+</html>
