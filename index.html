@@ -46,55 +46,106 @@
             margin-top: 12px;
             border-radius: 10px;
         }
-    </style>
-</head>
-<body>
+   
+const jobs = [
+  {
+    title: "Electrician Trainee",
+    certificate: "ITI Electrician",
+    skills: ["wiring", "maintenance", "electrical"],
+    location: "Telangana"
+  },
+  {
+    title: "Electrical Technician",
+    certificate: "ITI Electrician",
+    skills: ["electrical", "testing", "maintenance"],
+    location: "India"
+  },
+  {
+    title: "Computer Operator",
+    certificate: "Computer Certificate",
+    skills: ["computer", "typing", "ms office"],
+    location: "India"
+  },
+  {
+    title: "Data Entry Operator",
+    certificate: "Any Qualification",
+    skills: ["typing", "computer", "data entry"],
+    location: "India"
+  }
+];
 
-<header>
-    <h1>SkillMatch</h1>
-    <p>Find Jobs Based on Your Skills & Certificates</p>
-</header>
-
-<div class="container">
-    <h2>Find Your Job</h2>
-
-    <input id="qualification" placeholder="Your Qualification">
-    <input id="certificate" placeholder="Your Certificate">
-    <input id="skills" placeholder="Your Skills">
-    <input id="location" placeholder="Your Location">
-
-    <button onclick="findJobs()">Search Jobs</button>
-
-    <div id="results"></div>
-</div>
-
-<script>
 function findJobs() {
-    let qualification = document.getElementById("qualification").value;
-    let certificate = document.getElementById("certificate").value;
-    let skills = document.getElementById("skills").value;
-    let location = document.getElementById("location").value;
+  const qualification =
+    document.getElementById("qualification").value.toLowerCase();
 
-    let results = document.getElementById("results");
+  const certificate =
+    document.getElementById("certificate").value.toLowerCase();
 
-    if (!qualification || !skills) {
-        results.innerHTML = "<p>Please enter qualification and skills.</p>";
-        return;
+  const skills =
+    document.getElementById("skills").value.toLowerCase();
+
+  const location =
+    document.getElementById("location").value.toLowerCase();
+
+  const results = document.getElementById("results");
+  results.innerHTML = "";
+
+  if (!qualification || !skills) {
+    results.textContent = "Enter your qualification and skills.";
+    return;
+  }
+
+  const userSkills = skills.split(",").map(s => s.trim());
+
+  const matches = jobs.map(job => {
+    let score = 0;
+
+    job.skills.forEach(skill => {
+      if (userSkills.some(s => s.includes(skill))) {
+        score += 1;
+      }
+    });
+
+    if (certificate.includes(job.certificate.toLowerCase()) ||
+        job.certificate === "Any Qualification") {
+      score += 2;
     }
 
-    results.innerHTML = `
-        <h2>Your Job Search</h2>
-        <div class="job">
-            <h3>Electrician Trainee</h3>
-            <p>Skills: Electrical Wiring, Maintenance</p>
-            <p>Sample job result for ${location || "India"}</p>
-            <p>Certificate: ${certificate || "Not specified"}</p>
-            <p>Qualification: ${qualification}</p>
-            <p><b>Demo listing – not a live vacancy.</b></p>
-        </div>
-    `;
+    return { job, score };
+  }).filter(item => item.score > 0)
+    .sort((a, b) => b.score - a.score);
+
+  const heading = document.createElement("h2");
+  heading.textContent = "Matching Jobs";
+  results.appendChild(heading);
+
+  if (matches.length === 0) {
+    results.append("No matching sample jobs found. Try different skills.");
+    return;
+  }
+
+  matches.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "job";
+
+    const title = document.createElement("h3");
+    title.textContent = item.job.title;
+
+    const details = document.createElement("p");
+    details.textContent =
+      "Required certificate: " + item.job.certificate;
+
+    const score = document.createElement("p");
+    score.textContent = "Demo match points: " + item.score;
+
+    const note = document.createElement("p");
+    note.textContent = "Sample listing - not a live vacancy.";
+
+    card.append(title, details, score, note);
+    results.appendChild(card);
+  });
 }
-</script>
+
 
 </body>
 </html>
