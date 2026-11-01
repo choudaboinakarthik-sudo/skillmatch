@@ -2,150 +2,356 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SkillMatch - Smart Job Finder</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f3f6ff;
-            margin: 0;
-            color: #172554;
-        }
-        header {
-            background: #172554;
-            color: white;
-            padding: 25px;
-            text-align: center;
-        }
-        .container {
-            max-width: 600px;
-            margin: 30px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 15px;
-        }
-        input {
-            width: 95%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-        }
-        button {
-            background: #2563eb;
-            color: white;
-            padding: 13px 20px;
-            border: 0;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        .job {
-            background: #eff6ff;
-            padding: 15px;
-            margin-top: 12px;
-            border-radius: 10px;
-        }
-   
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillMatch - Smart Job Finder</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f3f6ff;
+  color: #172554;
+}
+
+header {
+  background: #172554;
+  color: white;
+  text-align: center;
+  padding: 30px 15px;
+}
+
+header h1 {
+  margin: 0 0 10px;
+  font-size: 30px;
+}
+
+header p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.container {
+  max-width: 650px;
+  margin: 25px auto;
+  padding: 20px;
+}
+
+.panel {
+  background: white;
+  padding: 22px;
+  border-radius: 15px;
+  box-shadow: 0 4px 18px #00000012;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+input, select {
+  width: 100%;
+  padding: 13px;
+  margin-top: 7px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+button {
+  width: 100%;
+  background: #2563eb;
+  color: white;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+.job {
+  background: #eff6ff;
+  padding: 16px;
+  margin-top: 15px;
+  border-radius: 10px;
+  border-left: 4px solid #2563eb;
+}
+
+.job h3 {
+  margin-top: 0;
+}
+
+.match {
+  color: #166534;
+  font-weight: bold;
+}
+
+.notice {
+  background: #fff7e6;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 18px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>SkillMatch</h1>
+  <p>Smart Job Finder</p>
+  <p>Find opportunities that match your skills and qualifications.</p>
+</header>
+
+<div class="container">
+
+<div class="panel">
+
+<h2>Build Your Job Profile</h2>
+<p>Enter your details to find suitable sample job matches.</p>
+
+<label for="qualification">Your Qualification</label>
+<select id="qualification">
+  <option value="">Select qualification</option>
+  <option>10th</option>
+  <option>Intermediate</option>
+  <option>ITI</option>
+  <option>Diploma</option>
+  <option>Degree</option>
+  <option>B.Tech</option>
+  <option>Any Qualification</option>
+</select>
+
+<label for="certificate">Your Certificate / Course</label>
+<input id="certificate" placeholder="Example: ITI Electrician">
+
+<label for="skills">Your Skills</label>
+<input id="skills" placeholder="Example: wiring, electrical, testing">
+
+<label for="location">Preferred Location</label>
+<input id="location" placeholder="Example: Telangana or India">
+
+<button onclick="findJobs()">Find Matching Jobs</button>
+
+<div id="results"></div>
+
+<div class="notice">
+  Note: These are sample job listings for demonstration only.
+  They are not confirmed live vacancies. Match points show profile
+  similarity, not the probability of getting hired.
+</div>
+
+</div>
+</div>
+
+<footer>
+  SkillMatch © 2026 | Smart Job Finder Demo
+</footer>
+
+<script>
+
 const jobs = [
-  {
-    title: "Electrician Trainee",
-    certificate: "ITI Electrician",
-    skills: ["wiring", "maintenance", "electrical"],
-    location: "Telangana"
-  },
-  {
-    title: "Electrical Technician",
-    certificate: "ITI Electrician",
-    skills: ["electrical", "testing", "maintenance"],
-    location: "India"
-  },
-  {
-    title: "Computer Operator",
-    certificate: "Computer Certificate",
-    skills: ["computer", "typing", "ms office"],
-    location: "India"
-  },
-  {
-    title: "Data Entry Operator",
-    certificate: "Any Qualification",
-    skills: ["typing", "computer", "data entry"],
-    location: "India"
-  }
+
+{
+  title: "Electrician Trainee",
+  qualification: ["ITI", "10th"],
+  certificate: ["ITI Electrician"],
+  skills: ["wiring", "maintenance", "electrical"],
+  location: ["Telangana", "India"]
+},
+
+{
+  title: "Electrical Technician",
+  qualification: ["ITI", "Diploma"],
+  certificate: ["ITI Electrician", "Electrical Diploma"],
+  skills: ["electrical", "testing", "maintenance"],
+  location: ["India"]
+},
+
+{
+  title: "Computer Operator",
+  qualification: ["Intermediate", "Degree", "Any Qualification"],
+  certificate: ["Computer Certificate"],
+  skills: ["computer", "typing", "ms office"],
+  location: ["India"]
+},
+
+{
+  title: "Data Entry Operator",
+  qualification: ["10th", "Intermediate", "Degree", "Any Qualification"],
+  certificate: ["Any Qualification"],
+  skills: ["typing", "computer", "data entry"],
+  location: ["India"]
+},
+
+{
+  title: "Junior Technician",
+  qualification: ["ITI", "Diploma"],
+  certificate: ["ITI Electrician", "Electrical Diploma"],
+  skills: ["repair", "electrical", "testing"],
+  location: ["Telangana", "India"]
+},
+
+{
+  title: "Office Assistant",
+  qualification: ["Intermediate", "Degree"],
+  certificate: ["Any Qualification"],
+  skills: ["communication", "computer", "typing"],
+  location: ["India"]
+}
+
 ];
 
 function findJobs() {
+
   const qualification =
     document.getElementById("qualification").value.toLowerCase();
 
   const certificate =
-    document.getElementById("certificate").value.toLowerCase();
+    document.getElementById("certificate").value.toLowerCase().trim();
 
   const skills =
     document.getElementById("skills").value.toLowerCase();
 
   const location =
-    document.getElementById("location").value.toLowerCase();
+    document.getElementById("location").value.toLowerCase().trim();
 
   const results = document.getElementById("results");
+
   results.innerHTML = "";
 
   if (!qualification || !skills) {
-    results.textContent = "Enter your qualification and skills.";
+    results.textContent =
+      "Please select your qualification and enter your skills.";
     return;
   }
 
-  const userSkills = skills.split(",").map(s => s.trim());
+  const userSkills = skills.split(",")
+    .map(skill => skill.trim())
+    .filter(Boolean);
 
   const matches = jobs.map(job => {
+
     let score = 0;
 
-    job.skills.forEach(skill => {
-      if (userSkills.some(s => s.includes(skill))) {
-        score += 1;
-      }
-    });
+    const qualificationMatch =
+      job.qualification.some(q =>
+        q.toLowerCase() === qualification ||
+        q.toLowerCase() === "any qualification"
+      );
 
-    if (certificate.includes(job.certificate.toLowerCase()) ||
-        job.certificate === "Any Qualification") {
-      score += 2;
-    }
+    const certificateMatch =
+      job.certificate.some(c =>
+        c.toLowerCase() === "any qualification" ||
+        (certificate && certificate.includes(c.toLowerCase())) ||
+        (certificate && c.toLowerCase().includes(certificate))
+      );
 
-    return { job, score };
-  }).filter(item => item.score > 0)
-    .sort((a, b) => b.score - a.score);
+    const matchedSkills = job.skills.filter(jobSkill =>
+      userSkills.some(userSkill =>
+        userSkill.includes(jobSkill) ||
+        jobSkill.includes(userSkill)
+      )
+    );
+
+    const locationMatch =
+      !location ||
+      job.location.some(place =>
+        place.toLowerCase() === "india" ||
+        location.includes(place.toLowerCase()) ||
+        place.toLowerCase().includes(location)
+      );
+
+    if (qualificationMatch) score += 2;
+    if (certificateMatch) score += 2;
+    score += matchedSkills.length;
+    if (locationMatch) score += 1;
+
+    return {
+      job,
+      score,
+      qualificationMatch,
+      certificateMatch,
+      matchedSkills,
+      locationMatch
+    };
+
+  }).filter(item =>
+    item.score > 0 &&
+    item.qualificationMatch &&
+    item.locationMatch
+  ).sort((a, b) => b.score - a.score);
 
   const heading = document.createElement("h2");
   heading.textContent = "Matching Jobs";
   results.appendChild(heading);
 
   if (matches.length === 0) {
-    results.append("No matching sample jobs found. Try different skills.");
+    results.appendChild(
+      document.createTextNode(
+        "No matching sample jobs found. Try different skills or location."
+      )
+    );
     return;
   }
 
   matches.forEach(item => {
+
     const card = document.createElement("div");
     card.className = "job";
 
     const title = document.createElement("h3");
     title.textContent = item.job.title;
 
+    const score = document.createElement("p");
+    score.className = "match";
+    score.textContent = "Demo match points: " + item.score;
+
     const details = document.createElement("p");
     details.textContent =
-      "Required certificate: " + item.job.certificate;
+      "Required certificate: " + item.job.certificate.join(", ");
 
-    const score = document.createElement("p");
-    score.textContent = "Demo match points: " + item.score;
+    const skillDetails = document.createElement("p");
+    skillDetails.textContent =
+      "Matching skills: " +
+      (item.matchedSkills.join(", ") || "No exact skill match");
 
     const note = document.createElement("p");
     note.textContent = "Sample listing - not a live vacancy.";
 
-    card.append(title, details, score, note);
+    card.append(title, score, details, skillDetails, note);
     results.appendChild(card);
+
   });
+
 }
 
+</script>
 
 </body>
 </html>
